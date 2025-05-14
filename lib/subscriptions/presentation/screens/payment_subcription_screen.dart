@@ -1,4 +1,4 @@
-import 'package:alquilafacil/auth/presentation/providers/SignInPovider.dart';
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
 import 'package:alquilafacil/auth/presentation/screens/login.dart';
 import 'package:alquilafacil/spaces/presentation/screens/search_spaces.dart';
 import 'package:alquilafacil/subscriptions/domain/model/subscription.dart';
@@ -57,7 +57,7 @@ class PaymentSubscription extends StatelessWidget {
           note: "Contact us for any questions on your order.",
           onSuccess: (Map params) async {
               try{
-                await subscriptionProvider.createSubscription(Subscription(planId: planId, userId: signInProvider.userId));
+                await subscriptionProvider.createSubscription(Subscription(planId: planId, userId: signInProvider.userId, voucherImageUrl: ""));
               } finally{
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const PaymentFinishScreen()));
               }

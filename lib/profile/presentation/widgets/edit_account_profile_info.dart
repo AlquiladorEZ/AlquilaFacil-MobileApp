@@ -1,5 +1,5 @@
 
-import 'package:alquilafacil/profile/presentation/providers/pofile_provider.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
 import 'package:alquilafacil/profile/presentation/widgets/edit_account_info_field.dart';
 import 'package:alquilafacil/profile/presentation/widgets/edit_profile_actions.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +13,19 @@ class EditAccountProfileInfo extends StatefulWidget {
   final String phoneNumber;
   final String documentNumber;
   final String dateOfBirth;
-  const EditAccountProfileInfo({super.key, required this.name, required this.motherName, required this.fatherName, required this.phoneNumber, required this.documentNumber, required this.dateOfBirth});
+  final String bankAccount;
+  final String interbankAccount;
+  const EditAccountProfileInfo({
+    super.key,
+    required this.name,
+    required this.motherName,
+    required this.fatherName,
+    required this.phoneNumber,
+    required this.documentNumber,
+    required this.dateOfBirth,
+    required this.bankAccount,
+    required this.interbankAccount,
+  });
 
   @override
   State<EditAccountProfileInfo> createState() => _EditAccountProfileInfoState();
@@ -90,6 +102,22 @@ class _EditAccountProfileInfoState extends State<EditAccountProfileInfo> {
               labelParam: "Ingrese la nueva fecha de cumpleaños",
               onChangeValue: (String value) {
                 profileProvider.setCurrentDateOfBirth(value);
+              },
+            ),
+            const SizedBox(height: 20),
+            EditAccountInfoField(
+              accountParam: profileProvider.bankAccount,
+              labelParam: "Ingrese la nueva cuenta bancaria",
+              onChangeValue: (String value) {
+                profileProvider.setBankAccount(value);
+              },
+            ),
+            const SizedBox(height: 20),
+            EditAccountInfoField(
+              accountParam: profileProvider.interbankAccount,
+              labelParam: "Ingrese la nueva cuenta interbancaria",
+              onChangeValue: (String value) {
+                profileProvider.setInterbankAccount(value);
               },
             ),
             const SizedBox(height: 20),

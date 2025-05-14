@@ -1,5 +1,5 @@
 class Constant {
-   static const String BASE_URL = "https://alquilafacilapi.azurewebsites.net/";
+   static const String BASE_URL = "https://alquilafacil-backend.onrender.com/";
    static const String RESOURCE_PATH = "api/v1/";
 
    static String getEndpoint(String route, String? path){

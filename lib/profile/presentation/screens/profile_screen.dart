@@ -1,9 +1,10 @@
-import 'package:alquilafacil/auth/presentation/providers/SignInPovider.dart';
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
 import 'package:alquilafacil/public/presentation/widgets/screen_bottom_app_bar.dart';
 import 'package:alquilafacil/spaces/presentation/providers/space_provider.dart';
 import 'package:alquilafacil/subscriptions/presentation/provider/plan_provider.dart';
 import 'package:alquilafacil/subscriptions/presentation/screens/payment_finish_screen.dart';
 import 'package:alquilafacil/subscriptions/presentation/screens/subscription_screen.dart';
+import 'package:alquilafacil/subscriptions/presentation/screens/subscriptions_management_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -126,9 +127,25 @@ class ProfileScreen extends StatelessWidget {
                       },
                     ),
                     const Divider(),
+                  ...[
+                  if (signInProvider.userId == 1) ...[
+                      NavigationRow(
+                        title: 'Gestion de suscripciones',
+                        routeName: '/subscriptions-management',
+                        onTap: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SubscriptionsManagementScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      const Divider(),
+                    ],
                     const NavigationRow(
                       title: 'Soporte',
-                      routeName: '/support',
+                      routeName: '/faqs',
                     ),
                     const Divider(),
                     const NavigationRow(
@@ -153,7 +170,8 @@ class ProfileScreen extends StatelessWidget {
                     )
 
                   ],
-                ),
+          ]       ),
+
               ),
             ),
           ],

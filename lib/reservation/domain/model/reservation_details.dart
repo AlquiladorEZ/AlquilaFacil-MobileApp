@@ -6,13 +6,15 @@ class ReservationDetails {
   final DateTime selectedDay;
   final TimeOfDay startTime;
   final TimeOfDay endTime;
+  final String voucherImageUrl;
 
   const ReservationDetails({
     required this.owner,
     required this.spaceName,
     required this.selectedDay,
     required this.startTime,
-    required this.endTime
+    required this.endTime,
+    this.voucherImageUrl = "",
   });
 
 }

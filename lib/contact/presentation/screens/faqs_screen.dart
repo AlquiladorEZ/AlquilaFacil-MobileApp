@@ -14,7 +14,9 @@ class FaqsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: MainTheme.background(context),
       appBar: AppBar(
-        backgroundColor: themeProvider.isDarkTheme ? MainTheme.primary(context) : MainTheme.background(context),
+        backgroundColor: themeProvider.isDarkTheme
+            ? MainTheme.primary(context)
+            : MainTheme.background(context),
         title: Text(
           'Preguntas frecuentes',
           style: TextStyle(color: MainTheme.contrast(context)),
@@ -32,36 +34,40 @@ class FaqsScreen extends StatelessWidget {
         child: ListView(
           children: const [
             FAQTile(
-              question: "¿Qué es AlquilaFácil?",
+              question: "¿Cómo reservo un espacio?",
               answer:
-              "AlquilaFácil es una plataforma que conecta a propietarios e inquilinos de manera rápida y segura.",
-            ),
-             FAQTile(
-              question: "¿Qué hago si no encuentro propiedades disponibles en mi zona?",
-              answer:
-              "Recomendamos ajustar los filtros de búsqueda para encontrar más opciones.",
+              "Primero debes iniciar sesión, seleccionar el espacio deseado y completar la información de reserva (fecha y horario). Luego deberás realizar el depósito al número de cuenta indicado y subir el comprobante de pago para su validación.",
             ),
             FAQTile(
-              question: "¿Cómo puedo registrar mi propiedad?",
+              question: "¿Qué sucede después de subir el comprobante de pago?",
               answer:
-              "Puedes registrar tu propiedad completando los detalles de tu propiedad en la sección 'Registrar espacio'.",
-            ),
-             FAQTile(
-              question: "¿Qué tipos de locales puedo publicar?",
-              answer:
-              "Puedes publicar cualquier tipo de local, desde apartamentos y casas hasta oficinas o locales comerciales.",
+              "El propietario del espacio validará el comprobante. Si todo es correcto, la reserva quedará confirmada. En caso de problemas o fraude, el propietario puede rechazarla.",
             ),
             FAQTile(
-              question: "¿Es necesario pagar para usar AlquilaFácil?",
+              question: "¿AlquilaFácil gestiona el dinero o reembolsa pagos?",
               answer:
-              "Crear una cuenta es gratuito. Sin embargo, ofrecemos planes premium con beneficios adicionales.",
+              "No. AlquilaFácil no retiene ni transfiere dinero. Todos los pagos se hacen directamente al propietario, por lo que es importante verificar bien los datos antes de transferir.",
             ),
             FAQTile(
-              question: "¿Cómo gestiono las reservas que han hecho en mi propiedad?",
+              question: "¿Cómo activo una suscripción premium?",
               answer:
-              "Dentro de la sección 'Calendario', podrás ver todas las reservas que han hecho en tus propiedades, las que se encuentran resaltadas de color azul, se pueden modificar y/o cancelar, sin embargo, las reservas resaltadas de amarillo, que son hechas por usuarios premium, no se pueden modificar.",
+              "Realiza el pago correspondiente y sube el comprobante. Un administrador validará la información y activará tu suscripción manualmente.",
             ),
-
+            FAQTile(
+              question: "¿Qué beneficios tengo como usuario premium?",
+              answer:
+              "Acceso prioritario a espacios, reservas protegidas que no pueden ser modificadas por el propietario, y funciones adicionales dentro de la plataforma.",
+            ),
+            FAQTile(
+              question: "¿Qué hago si sospecho de un fraude?",
+              answer:
+              "Puedes reportar el local desde la sección de detalles. El equipo revisará el caso y tomará medidas si corresponde. Reportes falsos pueden llevar a sanciones.",
+            ),
+            FAQTile(
+              question: "¿Puedo posponer una reserva?",
+              answer:
+              "Sí, pero solo si la reserva no es premium. Las reservas estándar se pueden posponer desde el calendario si están resaltadas en azul en un máximo de una hora.",
+            ),
           ],
         ),
       ),

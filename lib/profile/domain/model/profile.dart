@@ -6,18 +6,18 @@ class Profile {
   late final String documentNumber;
   late final String dateOfBirth;
   late final String phoneNumber;
-  late final String photoUrl;
-  final int userId;
+  String bankAccount;
+  String interbankAccount;
   Profile({
     required this.id,
     required this.name,
     required this.phoneNumber,
     required this.fatherName,
     required this.motherName,
-    required this.userId,
     required this.documentNumber,
     required this.dateOfBirth,
-    required this.photoUrl,
+    required this.bankAccount,
+    required this.interbankAccount,
   });
 
   Map<String, dynamic> toJson() {
@@ -28,8 +28,8 @@ class Profile {
       'phone': phoneNumber,
       'documentNumber': documentNumber,
       'dateOfBirth': dateOfBirth,
-      'userId': userId,
-      'photoUrl':photoUrl
+      'bankAccount': bankAccount,
+      'interbankAccount': interbankAccount,
     };
   }
 
@@ -42,8 +42,8 @@ class Profile {
       motherName: json['fullName'].split(" ")[2],
       documentNumber: json['documentNumber'],
       dateOfBirth: json['dateOfBirth'],
-      userId: json['userId'],
-      photoUrl: json['photoUrl']
+      bankAccount: "",
+      interbankAccount: "",
     );
   }
 }

@@ -45,8 +45,9 @@ class PlanTypeInformation extends StatelessWidget {
                         Text(
                             planName,
                           style: TextStyle(
-                            color: MainTheme.contrast(context),
-                            fontWeight: FontWeight.bold
+                              fontSize: 20.0,
+                              color: MainTheme.contrast(context),
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                         Container(
@@ -59,7 +60,15 @@ class PlanTypeInformation extends StatelessWidget {
                               color: MainTheme.helper(context)
                             ),
                           ),
-                        )
+                        ),
+                        Text(
+                            "Precio: S/.$planPrice",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: MainTheme.contrast(context),
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
                       ],
                     ),
                   )

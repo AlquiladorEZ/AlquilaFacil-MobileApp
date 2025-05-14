@@ -108,6 +108,7 @@ class SpaceProvider extends ChangeNotifier {
     try {
       var districtsResponse = await spaceService.getAllDistricts();
       districts = districtsResponse.toList();
+      logger.i("Districts: $districts");
     } catch (e) {
       logger.e(
           "Error while trying to fetch spaces districts, please check the service request");

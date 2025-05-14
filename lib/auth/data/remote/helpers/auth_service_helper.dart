@@ -35,7 +35,7 @@ class AuthServiceHelper extends AuthService{
 
 
   @override
-  Future<String> signUp(String username, String password, String email) async {
+  Future<String> signUp(String username, String password, String email, String name, String fatherName, String motherName, String dateOfBirth, String documentNumber, String phone) async {
     var client = HttpClient();
     try {
       var url = Uri.parse(Constant.getEndpoint("authentication", "/sign-up"));
@@ -44,7 +44,13 @@ class AuthServiceHelper extends AuthService{
       var requestBody = jsonEncode({
         "username": username,
         "password": password,
-        "email": email
+        "email": email,
+        "name": name,
+        "fatherName": fatherName,
+        "motherName": motherName,
+        "dateOfBirth": dateOfBirth,
+        "documentNumber": documentNumber,
+        "phone": phone
       });
       request.add(utf8.encode(requestBody));
       var response = await request.close();

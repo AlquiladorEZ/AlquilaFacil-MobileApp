@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../../../profile/presentation/providers/pofile_provider.dart';
+import '../../../profile/presentation/providers/profile_provider.dart';
 import '../../../public/ui/theme/main_theme.dart';
 import '../../../reservation/presentation/widgets/edit_space_info.dart';
 import '../../../reservation/presentation/widgets/space_info_details.dart';

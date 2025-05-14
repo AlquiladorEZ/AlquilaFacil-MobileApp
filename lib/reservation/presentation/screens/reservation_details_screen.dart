@@ -1,5 +1,5 @@
 
-import 'package:alquilafacil/profile/presentation/providers/pofile_provider.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
 import 'package:alquilafacil/public/presentation/widgets/screen_bottom_app_bar.dart';
 import 'package:alquilafacil/reservation/presentation/widgets/space_info_actions.dart';
 import 'package:alquilafacil/reservation/presentation/widgets/space_info_details.dart';

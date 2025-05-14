@@ -1,7 +1,7 @@
-import 'package:alquilafacil/auth/presentation/providers/SignInPovider.dart';
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
 import 'package:alquilafacil/auth/presentation/screens/login.dart';
 import 'package:alquilafacil/auth/presentation/screens/register.dart';
-import 'package:alquilafacil/profile/presentation/providers/pofile_provider.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
 import 'package:alquilafacil/public/ui/theme/main_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

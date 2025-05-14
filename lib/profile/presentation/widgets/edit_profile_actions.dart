@@ -1,9 +1,10 @@
+import 'package:alquilafacil/public/presentation/widgets/custom_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../public/ui/theme/main_theme.dart';
-import '../providers/pofile_provider.dart';
+import '../providers/profile_provider.dart';
 
 class EditProfileActions extends StatelessWidget {
   const EditProfileActions({super.key});
@@ -48,6 +49,14 @@ class EditProfileActions extends StatelessWidget {
             onPressed: () async {
               try {
                 await profileProvider.updateProfile();
+                profileProvider.setIsEditMode();
+                await showDialog(
+                  context: context,
+                  builder: (_) => const CustomDialog(
+                    title: "Datos cambiados correctamente",
+                    route: "/profile",
+                  ),
+                );
               } finally{
                 profileProvider.setIsEditMode();
               }

@@ -1,4 +1,4 @@
-import 'package:alquilafacil/auth/presentation/providers/SignInPovider.dart';
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
 import 'package:alquilafacil/auth/presentation/screens/login.dart';
 import 'package:alquilafacil/spaces/presentation/providers/space_provider.dart';
 import 'package:flutter/cupertino.dart';

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:alquilafacil/auth/presentation/providers/SignInPovider.dart';
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
 import 'package:alquilafacil/shared/handlers/concrete_response_message_handler.dart';
 import 'package:alquilafacil/spaces/data/remote/services/spaces_service.dart';
 import 'package:logger/logger.dart';
@@ -149,7 +149,7 @@ class SpaceServiceHelper extends SpaceService{
 
   @override
   Future<String> uploadImage(File image) async {
-    const String cloudName = "ducsr2p2w";
+    const String cloudName = "ddd2yf0ii";
     const String uploadPreset = "ml_default";
 
     try {

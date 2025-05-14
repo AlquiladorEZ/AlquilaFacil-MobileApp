@@ -1,4 +1,4 @@
-import 'package:alquilafacil/auth/presentation/providers/SignInPovider.dart';
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
 import 'package:alquilafacil/contact/presentation/widgets/notification_preview.dart';
 import 'package:alquilafacil/notification/presentation/providers/notification_provider.dart';
 import 'package:alquilafacil/public/presentation/widgets/screen_bottom_app_bar.dart';

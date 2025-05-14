@@ -1,12 +1,19 @@
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
+import 'package:alquilafacil/public/presentation/widgets/custom_dialog.dart';
 import 'package:alquilafacil/public/ui/theme/main_theme.dart';
 import 'package:alquilafacil/spaces/presentation/widgets/step_card.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 
 class RegisterSpaceStep1 extends StatelessWidget {
   final PageController pageController;
   const RegisterSpaceStep1({super.key, required this.pageController});
   @override
   Widget build(BuildContext context) {
+    final userId = context.watch<SignInProvider>().userId;
+    final profileProvider = context.watch<ProfileProvider>();
     return Padding(
       padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       child: SingleChildScrollView(
@@ -60,7 +67,12 @@ class RegisterSpaceStep1 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await profileProvider.fetchBankAccountsByUserId(userId);
+                    if (profileProvider.bankAccount == "" ||
+                        profileProvider.interbankAccount == "") {
+                      await showDialog(context: context, builder: (_) => const CustomDialog(title: "Registra tus cuentas bancarias antes de publicar un espacio", route:"/profile-details"));
+                    }
                     pageController.nextPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.ease);

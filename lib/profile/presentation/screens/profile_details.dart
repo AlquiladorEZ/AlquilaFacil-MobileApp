@@ -1,6 +1,5 @@
-import 'package:alquilafacil/auth/presentation/providers/SignInPovider.dart';
-import 'package:alquilafacil/auth/presentation/screens/login.dart';
-import 'package:alquilafacil/profile/presentation/providers/pofile_provider.dart';
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
 import 'package:alquilafacil/profile/presentation/widgets/profile_details_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +41,8 @@ class _ProfileDetailsState extends State<ProfileDetails> {
             phoneNumber: profileProvider.currentProfile!.phoneNumber,
             documentNumber: profileProvider.currentProfile!.documentNumber,
             dateOfBirth: profileProvider.currentProfile!.dateOfBirth,
-            photoUrl: profileProvider.currentProfile!.photoUrl,
+            bankAccount: profileProvider.currentProfile!.bankAccount,
+            interbankAccount: profileProvider.currentProfile!.interbankAccount,
           )
       ) :  Center(
         child: CircularProgressIndicator(

@@ -1,7 +1,6 @@
 import 'package:alquilafacil/auth/presentation/providers/ConditionTermsProvider.dart';
 import 'package:alquilafacil/auth/presentation/providers/SignUpProvider.dart';
-import 'package:alquilafacil/profile/presentation/providers/pofile_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -11,8 +10,28 @@ import '../../../public/ui/theme/main_theme.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/condition_terms.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   const Register({super.key});
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  final TextEditingController captchaController = TextEditingController();
+  late String generatedCaptcha;
+
+  String _generateCaptcha() {
+  final random = DateTime.now().millisecondsSinceEpoch.remainder(100000);
+  return random.toString().padLeft(5, '0');
+  }
+
+  @override
+  void initState() {
+  super.initState();
+  generatedCaptcha = _generateCaptcha();
+  }
+
   @override
   Widget build(BuildContext context) {
     final signUpProvider = context.watch<SignUpProvider>();
@@ -49,12 +68,12 @@ class Register extends StatelessWidget {
                     textLabel: "Nombre",
                     textHint: "Ingrese su nombre",
                     isPassword: false,
-                    param: profileProvider.name,
+                    param: signUpProvider.name,
                     onChanged: (newValue) {
-                      profileProvider.setName(newValue);
+                      signUpProvider.setName(newValue);
                     },
                     validator: (_) {
-                      return profileProvider.validateName();
+                      return signUpProvider.validateName();
                     },
                   ),
                   const SizedBox(height: 10),
@@ -66,12 +85,12 @@ class Register extends StatelessWidget {
                           textLabel: "Apellido paterno",
                           textHint: "Ingrese su apellido paterno:",
                           isPassword: false,
-                          param: profileProvider.fatherName,
+                          param: signUpProvider.fatherName,
                           onChanged: (newValue) {
-                            profileProvider.setFatherName(newValue);
+                            signUpProvider.setFatherName(newValue);
                           },
                           validator: (_) {
-                            return profileProvider.validateName();
+                            return signUpProvider.validateName();
                           },
                         ),
                       ),
@@ -82,12 +101,12 @@ class Register extends StatelessWidget {
                           textLabel: "Apellido materno",
                           textHint: "Ingrese su apellido materno:",
                           isPassword: false,
-                          param: profileProvider.motherName,
+                          param: signUpProvider.motherName,
                           onChanged: (newValue) {
-                            profileProvider.setMotherName(newValue);
+                            signUpProvider.setMotherName(newValue);
                           },
                           validator: (_) {
-                            return profileProvider.validateName();
+                            return signUpProvider.validateName();
                           },
                         ),
                       ),
@@ -104,10 +123,10 @@ class Register extends StatelessWidget {
                           isPassword: false,
                           param: profileProvider.phoneNumber,
                           onChanged: (newValue) {
-                            profileProvider.setPhoneNumber(newValue);
+                            signUpProvider.setPhone(newValue);
                           },
                           validator: (_) {
-                            return profileProvider.validatePhoneNumber();
+                            return signUpProvider.validatePhoneNumber();
                           },
                         ),
                       ),
@@ -118,9 +137,12 @@ class Register extends StatelessWidget {
                           textLabel: "Número de documento",
                           textHint: "Ingrese su número de documento",
                           isPassword: false,
-                          param: profileProvider.documentNumber,
+                          param: signUpProvider.documentNumber,
                           onChanged: (newValue) {
-                            profileProvider.setDocumentNumber(newValue);
+                            signUpProvider.setDocumentNumber(newValue);
+                          },
+                          validator: (_) {
+                            return signUpProvider.validateDocumentNumber();
                           },
                         ),
                       ),
@@ -131,17 +153,13 @@ class Register extends StatelessWidget {
                     textLabel: "Fecha de nacimiento",
                     textHint: "DD/MM/YY",
                     isPassword: false,
-                    param: profileProvider.dateOfBirth,
+                    param: signUpProvider.dateOfBirth,
                     onChanged: (newValue) {
-                      try {
-                        final parsedDate = DateFormat('dd/MM/yy').parse(newValue);
-                        profileProvider.setDateOfBirth(parsedDate);
-                      } catch (e) {
-                        Exception("Invalid date time");
-                      };
+                      final parsedDate = DateFormat('dd/MM/yy').parse(newValue);
+                      signUpProvider.setDateOfBirth(parsedDate);
                     },
                     validator: (_) {
-                      return profileProvider.validateDateOfBirth();
+                      return signUpProvider.validateDateOfBirth();
                     }
                   ),
                   const SizedBox(height: 10),
@@ -193,9 +211,46 @@ class Register extends StatelessWidget {
                       ),
                     ]
                   ),
+                  const SizedBox(height: 20),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: MainTheme.background(context),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      generatedCaptcha,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 2.0,
+                        color: MainTheme.contrast(context),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: captchaController,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 12),
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Escribe el captcha',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   const ConditionsTerms(),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   SizedBox(
                       width: 330,
                       height: 50,
@@ -206,11 +261,7 @@ class Register extends StatelessWidget {
                               await showDialog(context: context, builder: (_) => const CustomDialog(title: "Por favor, acepte nuestras políticas de uso", route:"/sign-up"));
                             } else {
                                 await signUpProvider.signUp();
-                                if (signUpProvider.successFulMessage.isNotEmpty) {
-                                  await profileProvider.createProfile(
-                                    signUpProvider.email,
-                                    signUpProvider.password,
-                                  );
+                                if (signUpProvider.successfulMessage.isNotEmpty) {
                                   await showDialog(context: context, builder: (_) => const CustomDialog(title: "Registro exitoso", route:"/login"));
                                 } else{
                                   await showDialog(context: context, builder: (_) => const CustomDialog(title: "Usuario ya existente o datos incorrectos", route:"/sign-up"));
@@ -223,6 +274,12 @@ class Register extends StatelessWidget {
                         },
                         child: const Text("Regístrate ahora"),
                       )),
+                  const SizedBox(height: 10),
+                  Container(
+                    width: 330,
+                    height: 1,
+                    decoration: BoxDecoration(color: MainTheme.background(context)),
+                  ),
                   const SizedBox(height: 25),
                   const Text(
                       "¿Ya tienes cuenta?",
@@ -239,92 +296,6 @@ class Register extends StatelessWidget {
                       child: const Text("Inicia sesión"),
                     )
                   ),
-                  const SizedBox(height: 10),
-                  Container(
-                    width: 330,
-                    height: 1,
-                    decoration: BoxDecoration(color: MainTheme.background(context)),
-                  ),
-                  const SizedBox(height: 30.0),
-                  Column(
-                    children: <Widget>[
-                      const Text(
-                        "o regístrate con",
-                        style: TextStyle(fontSize: 10.0, color: Colors.white),
-                      ),
-                      const SizedBox(height: 20.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          IconButton(
-                              onPressed: () async {
-                                try{
-                                  if (!conditionTermsProvider.isChecked) {
-                                    await showDialog(context: context, builder: (_) => const CustomDialog(title: "Por favor, acepte nuestras políticas de uso", route:"/sign-up"));
-                                  }else{
-                                    final facebookUserCredentials = await signUpProvider.signInWithFacebook();
-                                    final nameDetails = facebookUserCredentials.user?.displayName?.split(" ");
-                                    profileProvider.setPhoneNumber(facebookUserCredentials.user?.phoneNumber ?? "123456789");
-                                    profileProvider.setName(nameDetails?[0] ?? " ");
-                                    profileProvider.setFatherName(nameDetails?[1] ?? " ");
-                                    profileProvider.setMotherName(
-                                        (nameDetails!.length >= 3) ? nameDetails[2] : "None"
-                                    );
-                                    profileProvider.setDocumentNumber("1234567");
-                                    profileProvider.setDateOfBirth(DateTime.now());
-                                    profileProvider.setPhotoUrl(facebookUserCredentials.user?.photoURL ?? "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-profile-picture-male-icon.png");
-                                    signUpProvider.setUsername(facebookUserCredentials.user?.displayName ?? " ");
-                                    signUpProvider.setEmail(facebookUserCredentials.user?.email ?? "");
-
-                                    Navigator.pushReplacementNamed(context, "/sign-up");
-                                  }
-                                } on  FirebaseAuthException catch (_){
-                                  await showDialog(context: context, builder: (_) => const CustomDialog(title: "Usuario ya existente o datos incorrectos", route:"/sign-up"));
-                                }
-                              },
-                              icon: Image.network(
-                                "https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png",
-                                width: 40,
-                              )),
-                          const SizedBox(width: 20.0),
-                          IconButton(
-                            onPressed: () async {
-                              try{
-                                if (!conditionTermsProvider.isChecked) {
-                                  await showDialog(context: context, builder: (_) => const CustomDialog(title: "Por favor, acepte nuestras políticas de uso", route:"/sign-up"));
-                                }else{
-                                  final googleUserCredentials = await signUpProvider.signInWithGoogle();
-                                  final nameDetails = googleUserCredentials.user?.displayName?.split(" ");
-                                  profileProvider.setPhoneNumber(googleUserCredentials.user?.phoneNumber ?? "123456789");
-                                  profileProvider.setName(nameDetails?[0] ?? " ");
-                                  profileProvider.setFatherName(nameDetails?[1] ?? " ");
-                                  profileProvider.setMotherName(
-                                      (nameDetails!.length >= 3) ? nameDetails[2] : "None"
-                                  );
-                                  profileProvider.setDocumentNumber("1234567");
-                                  profileProvider.setDateOfBirth(DateTime.now());
-                                  profileProvider.setPhotoUrl(googleUserCredentials.user?.photoURL ?? "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-profile-picture-male-icon.png");
-                                  signUpProvider.setUsername(googleUserCredentials.user?.displayName ?? " ");
-                                  signUpProvider.setEmail(googleUserCredentials.user?.email ?? "");
-
-                                  Navigator.pushReplacementNamed(context, "/sign-up");
-                                }
-                              } on  FirebaseAuthException catch (_){
-                                await showDialog(context: context, builder: (_) => const CustomDialog(title: "Usuario ya existente o datos incorrectos", route:"/sign-up"));
-                              }
-                            },
-                            icon: Image.network(
-                              "https://www.pngmart.com/files/16/official-Google-Logo-PNG-Image.png",
-                              width: 30,
-                            ),
-                            style: ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll<Color>(
-                                    MainTheme.background(context))),
-                          )
-                        ],
-                      )
-                    ],
-                  )
                 ],
               ),
             ))));

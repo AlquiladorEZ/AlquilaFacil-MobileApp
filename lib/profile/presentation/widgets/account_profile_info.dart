@@ -7,7 +7,16 @@ class AccountProfileInfo extends StatelessWidget {
   final String phoneNumber;
   final String documentNumber;
   final String dateOfBirth;
-  const AccountProfileInfo({super.key, required this.phoneNumber, required this.documentNumber, required this.dateOfBirth});
+  final String bankAccount;
+  final String interbankAccount;
+  const AccountProfileInfo({
+    super.key,
+    required this.phoneNumber,
+    required this.documentNumber,
+    required this.dateOfBirth,
+    required this.bankAccount,
+    required this.interbankAccount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +24,7 @@ class AccountProfileInfo extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          const SizedBox(height: 50),
+          const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -81,6 +90,54 @@ class AccountProfileInfo extends StatelessWidget {
               ),
               Text(
                 dateOfBirth,
+                style: TextStyle(
+                    color: MainTheme.contrast(context)
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.account_balance_wallet),
+                  SizedBox(width: 20),
+                  Text(
+                    "C. bancaria: ",
+                    style: TextStyle(
+                        color: MainTheme.contrast(context)
+                    ),
+                  )
+                ],
+              ),
+              Text(
+                bankAccount,
+                style: TextStyle(
+                    color: MainTheme.contrast(context)
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.account_balance_wallet),
+                  SizedBox(width: 20),
+                  Text(
+                    "C. interbancaria: ",
+                    style: TextStyle(
+                        color: MainTheme.contrast(context)
+                    ),
+                  )
+                ],
+              ),
+              Text(
+                interbankAccount,
                 style: TextStyle(
                     color: MainTheme.contrast(context)
                 ),

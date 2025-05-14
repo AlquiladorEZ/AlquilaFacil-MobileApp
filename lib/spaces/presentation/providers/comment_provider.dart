@@ -1,4 +1,4 @@
-import 'package:alquilafacil/profile/presentation/providers/pofile_provider.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
 import 'package:alquilafacil/spaces/data/remote/helpers/comment_service_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logger/logger.dart';

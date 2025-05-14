@@ -64,7 +64,7 @@ class PaymentScreen extends StatelessWidget {
           onSuccess: (Map params) async {
             Logger().i("Payment Success: $params");
             try {
-                await reservationProvider.createReservation(userId, localId, startDate, endDate);
+                //await reservationProvider.createReservation(userId, localId, startDate, endDate);
                 await showDialog(context: context, builder: (_) => const CustomDialog(title: "Reserva realizada con éxito", route:"/search-space"));
             } on DioException catch (e) {
               Logger().e("Error while creating reservation: $e");

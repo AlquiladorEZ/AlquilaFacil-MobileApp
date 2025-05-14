@@ -12,8 +12,8 @@ class ProfileProvider extends ChangeNotifier {
   String documentNumber = "";
   String dateOfBirth = "";
   String phoneNumber = "";
-  String photoUrl = "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-profile-picture-male-icon.png";
-  int userId = 0;
+  String bankAccount = "";
+  String interbankAccount = "";
   bool isEditMode = false;
 
 
@@ -69,8 +69,13 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setPhotoUrl(String value){
-    photoUrl = value;
+  void setBankAccount(String value) {
+    bankAccount = value;
+    notifyListeners();
+  }
+
+  void setInterbankAccount(String value) {
+    interbankAccount = value;
     notifyListeners();
   }
 
@@ -105,12 +110,6 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setUserId(int value) {
-    userId = value;
-    notifyListeners();
-  }
-
-
   String? validatePhoneNumber(){
     if (phoneNumber.length != 9){
       return "El número de contacto debe ser de 9 digitos";
@@ -122,7 +121,7 @@ class ProfileProvider extends ChangeNotifier {
 
   String? validateName(){
     if (name.isEmpty || motherName.isEmpty || fatherName.isEmpty ){
-      return "${name.isEmpty ? "Nombre": "Appellido paterno y materno"}  es un campo requerido";
+      return "${name.isEmpty ? "Nombre": "Apellido paterno y materno"}  es un campo requerido";
     }
     else{
       return null;
@@ -158,23 +157,6 @@ class ProfileProvider extends ChangeNotifier {
     return null;
   }
 
-
-  Future<void> createProfile(String email, String password) async {
-    currentProfile = await userServiceHelper.createProfile(
-      email,
-      password,
-      name,
-      fatherName,
-      motherName,
-      documentNumber,
-      dateOfBirth,
-      phoneNumber,
-      photoUrl
-    );
-    notifyListeners();
-  }
-
-
   Future<void> updateProfile() async {
     var profileId = currentProfile!.id;
     var profileToUpdate = {
@@ -184,18 +166,30 @@ class ProfileProvider extends ChangeNotifier {
       "phone":currentPhoneNumber,
       "documentNumber": currentDocumentNumber,
       "dateOfBirth": currentDateOfBirth,
-      "userId": currentProfile!.userId,
-      "photoUrl": currentProfile!.photoUrl
+      "bankAccountNumber": bankAccount,
+      "interbankAccountNumber": interbankAccount,
     };
     currentProfile = await userServiceHelper.updateProfile(profileId, profileToUpdate);
     notifyListeners();
   }
 
-  Future<void>fetchProfileByUserId(int userId) async {
+  Future<void> fetchProfileByUserId(int userId) async {
     try {
       currentProfile = await userServiceHelper.getProfileByUserId(userId);
+
     } catch (_){
       Logger().e("Error while trying to fecth profile by user id");
+    }
+    notifyListeners();
+  }
+
+  Future<void> fetchBankAccountsByUserId(int userId) async {
+    try {
+      List<String> bankAccounts = await userServiceHelper.getBankAccountsByUserId(userId);
+      bankAccount = bankAccounts[0];
+      interbankAccount = bankAccounts[1];
+    } catch (_) {
+      Logger().e("Error while trying to fetch bank accounts");
     }
     notifyListeners();
   }

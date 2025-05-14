@@ -4,6 +4,7 @@ class Reservation {
   final int spaceId;
   final DateTime startDate;
   final DateTime endDate;
+  final String voucherImageUrl;
   bool? isSubscribed;
 
   Reservation({
@@ -12,6 +13,7 @@ class Reservation {
     required this.spaceId,
     required this.startDate,
     required this.endDate,
+    this.voucherImageUrl = "",
     this.isSubscribed,
   });
 
@@ -22,7 +24,7 @@ class Reservation {
       userId: json['userId'] as int,
       spaceId: json['localId'] as int,
       startDate: DateTime.parse(json['startDate']),
-      endDate: DateTime.parse(json['endDate']),
+      endDate: DateTime.parse(json['endDate'])
     );
   }
 
@@ -33,6 +35,7 @@ class Reservation {
       spaceId: json['localId'] as int,
       startDate: DateTime.parse(json['startDate']),
       endDate: DateTime.parse(json['endDate']),
+      voucherImageUrl: json['voucherImageUrl'] as String,
       isSubscribed: json['isSubscribe'] as bool,
     );
   }
@@ -45,6 +48,7 @@ class Reservation {
       'localId': spaceId,
       'startDate': startDate,
       'endDate': endDate,
+      'voucherImageUrl': voucherImageUrl,
     };
   }
 }

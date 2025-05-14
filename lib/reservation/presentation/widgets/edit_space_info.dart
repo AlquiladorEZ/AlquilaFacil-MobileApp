@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import '../../../profile/presentation/providers/pofile_provider.dart';
+import '../../../profile/presentation/providers/profile_provider.dart';
 import '../../../public/ui/theme/main_theme.dart';
 import '../../../spaces/presentation/providers/space_provider.dart';
 import '../../../spaces/presentation/widgets/edit_space_field.dart';

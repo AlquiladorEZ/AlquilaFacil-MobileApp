@@ -1,6 +1,6 @@
 import 'package:alquilafacil/auth/presentation/screens/login.dart';
 import 'package:alquilafacil/profile/domain/model/profile.dart';
-import 'package:alquilafacil/profile/presentation/providers/pofile_provider.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
 import 'package:alquilafacil/public/presentation/widgets/screen_bottom_app_bar.dart';
 import 'package:alquilafacil/spaces/data/remote/helpers/comment_service_helper.dart';
 import 'package:alquilafacil/spaces/domain/model/comment.dart';

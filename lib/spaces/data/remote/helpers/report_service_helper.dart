@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:alquilafacil/auth/presentation/providers/SignInPovider.dart';
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
 import 'package:alquilafacil/shared/constants/constant.dart';
 import 'package:alquilafacil/shared/handlers/concrete_response_message_handler.dart';
 import 'package:alquilafacil/spaces/data/remote/services/report_service.dart';

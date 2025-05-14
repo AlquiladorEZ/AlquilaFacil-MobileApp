@@ -1,3 +1,4 @@
+import 'package:alquilafacil/public/presentation/widgets/custom_dialog.dart';
 import 'package:alquilafacil/public/presentation/widgets/screen_bottom_app_bar.dart';
 import 'package:alquilafacil/public/ui/providers/theme_provider.dart';
 import 'package:alquilafacil/public/ui/theme/main_theme.dart';
@@ -165,7 +166,14 @@ class _RegisterSpaceStepsState extends State<RegisterSpaceStepsScreen> {
                 nightPrice: price * 1.0,
               );
               try{
-                provider.createSpace(space);
+                await provider.createSpace(space);
+                showDialog(
+                  context: context,
+                  builder: (_) => const CustomDialog(
+                    title: "Espacio publicado",
+                    route: "/search-space",
+                  ),
+                );
               } finally{
                 Navigator.pushReplacementNamed(context, '/search-space');
               }

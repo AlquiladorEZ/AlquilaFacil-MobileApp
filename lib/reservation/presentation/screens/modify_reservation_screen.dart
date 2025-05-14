@@ -1,5 +1,5 @@
 
-import 'package:alquilafacil/profile/presentation/providers/pofile_provider.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
 import 'package:alquilafacil/public/presentation/widgets/screen_bottom_app_bar.dart';
 import 'package:alquilafacil/reservation/presentation/widgets/space_info_actions.dart';
 import 'package:alquilafacil/reservation/presentation/widgets/space_info_details.dart';
@@ -176,7 +176,6 @@ class _ModifyReservationScreen extends State<ModifyReservationScreen> {
                           textAlign: TextAlign.center,
                         ),
                         onPressed: () {
-
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -235,6 +234,62 @@ class _ModifyReservationScreen extends State<ModifyReservationScreen> {
                       )
                           : const SizedBox.shrink(),
                     ),
+                    const SizedBox(height: 20),
+                    reservation.endDate.isAfter(DateTime.now()) ?
+                    Text(
+                      "Comprobante de pago",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: MainTheme.contrast(context),
+                          fontSize: 25.0),
+                    ) : const SizedBox.shrink(),
+                    const SizedBox(height: 20),
+                    reservation.endDate.isAfter(DateTime.now()) ?
+                    Image.network(
+                      spaceProvider.spaceSelected!.photoUrl,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      repeat: ImageRepeat.noRepeat,
+                    ) : const SizedBox.shrink(),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: double.infinity,
+                      height: 60,
+                      child: reservation.endDate.isAfter(DateTime.now())
+                          ? TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                        ),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: const Text('Cancelar reserva'),
+                              content: const Text('¿Está seguro de que desea cancelar esta reserva?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('No'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    await reservationProvider.deleteReservation(reservation.id);
+                                    Navigator.pushReplacementNamed(context, '/calendar');
+                                  },
+                                  child: const Text('Sí'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Cancelar reserva",
+                          textAlign: TextAlign.center,
+                        ),
+                      ): const SizedBox.shrink()
+                    )
                   ],
                 ),
               ),

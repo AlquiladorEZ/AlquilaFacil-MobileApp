@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:alquilafacil/auth/presentation/providers/SignInPovider.dart';
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
 import 'package:alquilafacil/spaces/data/remote/services/local_categories_service.dart';
 import 'package:alquilafacil/spaces/domain/model/local_category.dart';
 import 'package:logger/logger.dart';

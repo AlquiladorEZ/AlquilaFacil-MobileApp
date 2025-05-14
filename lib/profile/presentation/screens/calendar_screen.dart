@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../../auth/presentation/providers/SignInPovider.dart';
+import '../../../auth/presentation/providers/SignInProvider.dart';
 import '../../../reservation/domain/model/reservation.dart';
 import '../widgets/event_type_indicator.dart';
 import '../widgets/highlighted_calendar_day.dart';

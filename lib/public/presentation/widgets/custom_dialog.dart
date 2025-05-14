@@ -31,12 +31,6 @@ class CustomDialog extends StatelessWidget {
                 },
               ),
             ),
-            TextButton(
-              child: const Text('Cancelar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
           ],
         ),
       ],

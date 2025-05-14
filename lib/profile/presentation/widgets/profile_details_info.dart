@@ -1,5 +1,5 @@
 import 'package:alquilafacil/auth/presentation/screens/login.dart';
-import 'package:alquilafacil/profile/presentation/providers/pofile_provider.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
 import 'package:alquilafacil/profile/presentation/widgets/account_profile_info.dart';
 import 'package:alquilafacil/profile/presentation/widgets/avatar_details.dart';
 import 'package:alquilafacil/profile/presentation/widgets/profile_actions.dart';
@@ -15,13 +15,16 @@ class ProfileDetailsInfo extends StatelessWidget {
   final String phoneNumber;
   final String documentNumber;
   final String dateOfBirth;
-  final String photoUrl;
+  final String bankAccount;
+  final String interbankAccount;
   const ProfileDetailsInfo({
         super.key,
         required this.fullName,
         required this.phoneNumber,
         required this.documentNumber,
-        required this.dateOfBirth, required this.photoUrl
+        required this.dateOfBirth,
+        required this.bankAccount,
+        required this.interbankAccount,
       });
 
   @override
@@ -39,17 +42,17 @@ class ProfileDetailsInfo extends StatelessWidget {
       child:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AvatarDetails(fullName: fullName, photoUrl: photoUrl),
-          const SizedBox(height: 50),
-          AccountProfileInfo(phoneNumber: phoneNumber, documentNumber: documentNumber, dateOfBirth: dateOfBirth),
+          AvatarDetails(fullName: fullName),
+          const SizedBox(height: 10),
+          AccountProfileInfo(phoneNumber: phoneNumber, documentNumber: documentNumber, dateOfBirth: dateOfBirth, bankAccount: bankAccount, interbankAccount: interbankAccount),
           const ProfileActions()
         ],
       ),
     ):   Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           padding: const EdgeInsets.only(top: 20, bottom: 10),
           width: double.infinity,
-          height: 750,
+          height: 1050,
           decoration:  BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15)
@@ -61,7 +64,8 @@ class ProfileDetailsInfo extends StatelessWidget {
             documentNumber: documentNumber,
             dateOfBirth: dateOfBirth,
             phoneNumber: phoneNumber,
-
+            bankAccount: bankAccount,
+            interbankAccount: interbankAccount
           )
     );
   }

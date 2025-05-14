@@ -7,7 +7,7 @@ import 'package:alquilafacil/contact/presentation/screens/notifications_screen.d
 import 'package:alquilafacil/notification/data/remote/helpers/notification_service_helper.dart';
 import 'package:alquilafacil/notification/presentation/providers/notification_provider.dart';
 import 'package:alquilafacil/profile/data/remote/helpers/user_service_helper.dart';
-import 'package:alquilafacil/profile/presentation/providers/pofile_provider.dart';
+import 'package:alquilafacil/profile/presentation/providers/profile_provider.dart';
 import 'package:alquilafacil/profile/presentation/screens/calendar_screen.dart';
 import 'package:alquilafacil/profile/presentation/screens/profile_details.dart';
 import 'package:alquilafacil/profile/presentation/screens/profile_screen.dart';
@@ -48,7 +48,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'auth/presentation/providers/SignInPovider.dart';
+import 'auth/presentation/providers/SignInProvider.dart';
 import 'auth/presentation/screens/login.dart';
 import 'auth/presentation/screens/register.dart';
 import 'contact/presentation/screens/faqs_screen.dart';

@@ -1,4 +1,4 @@
-import 'package:alquilafacil/auth/presentation/providers/SignInPovider.dart';
+import 'package:alquilafacil/auth/presentation/providers/SignInProvider.dart';
 import 'package:alquilafacil/public/presentation/widgets/custom_dialog.dart';
 import 'package:alquilafacil/spaces/presentation/screens/search_spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,13 +62,19 @@ class Login extends StatelessWidget {
                       await showDialog(context: context, builder: (_) => const CustomDialog(title: "Inicio de sesión exitoso", route:"/search-space"));
                     }
                   } catch(_){
-                     await showDialog(context: context, builder: (_) => const CustomDialog(title: "Correo electrónico o contraseña incorrectos", route:"/search-space"));
+                     await showDialog(context: context, builder: (_) => const CustomDialog(title: "Correo electrónico o contraseña incorrectos", route:"/login"));
                   }
                   },
                   child: const Text("Iniciar sesión"),
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20.0),
+              Container(
+                width: 330,
+                height: 1,
+                decoration: BoxDecoration(color: MainTheme.background(context)),
+              ),
+              const SizedBox(height: 20),
               const Text(
                   "¿Aún no tienes cuenta?",
                 style: TextStyle(
@@ -87,60 +93,7 @@ class Login extends StatelessWidget {
                       child: const Text("Regístrate")
                   ),
               ),
-              const SizedBox(height: 20.0),
-              Container(
-                width: 330,
-                height: 1,
-                decoration: BoxDecoration(color: MainTheme.background(context)),
-              ),
-              const SizedBox(height: 20.0),
-              Column(
-                children: <Widget>[
-                  const Text(
-                    "o inicia sesión con",
-                    style: TextStyle(fontSize: 10.0, color: Colors.white),
-                  ),
-                  const SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                          onPressed: () async {
-                            try {
-                              UserCredential? facebookUserCredentials = await signInProvider.signInWithFacebook();
-                              signInProvider.setEmail(facebookUserCredentials.user?.email ?? " ");
-                              Navigator.pushReplacementNamed(context, "/login");
-                            } on FirebaseAuthException catch (_) {
-                              await showDialog(context: context, builder: (_) => const CustomDialog(title: "Correo electrónico o contraseña incorrectos", route:"/login"));
-                              }
-                          },
-                          icon: Image.network(
-                            "https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png",
-                            width: 40,
-                          )),
-                      const SizedBox(width: 20.0),
-                      IconButton(
-                        onPressed: () async {
-                          try {
-                            UserCredential? googleUserCredentials = await signInProvider.signInWithGoogle();
-                            signInProvider.setEmail(googleUserCredentials.user?.email ?? " ");
-                            Navigator.pushReplacementNamed(context, "/login");
-                          } on FirebaseAuthException catch (_) {
-                            await showDialog(context: context, builder: (_) => const CustomDialog(title: "La autenticación con google fallo", route:"/login"));
-                          }
-                        },
-                        icon: Image.network(
-                          "https://www.pngmart.com/files/16/official-Google-Logo-PNG-Image.png",
-                          width: 30,
-                        ),
-                        style: IconButton.styleFrom(
-                          backgroundColor: MainTheme.background(context),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              )
+
             ],
           ),
         )),

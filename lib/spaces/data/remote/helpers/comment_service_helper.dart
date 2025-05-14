@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:alquilafacil/spaces/domain/model/comment.dart';
 import 'package:logger/logger.dart';
 
-import '../../../../auth/presentation/providers/SignInPovider.dart';
+import '../../../../auth/presentation/providers/SignInProvider.dart';
 import '../../../../shared/constants/constant.dart';
 import '../../../../shared/handlers/concrete_response_message_handler.dart';
 import '../services/comments_service.dart';
