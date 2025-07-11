@@ -74,19 +74,19 @@ class _MySpacesScreenState extends State<MySpacesScreen> {
                                 ),
                               ),
                               leading: Image.network(
-                                spaceProvider.currentSpaces[index].photoUrl,
+                                spaceProvider.currentSpaces[index].photoUrls[0],
                               ),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text("S/. ${spaceProvider.currentSpaces[index].nightPrice.toString()}",
+                                  Text("S/. ${spaceProvider.currentSpaces[index].price.toString()}",
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
                                       color: index % 2 == 0 ? MainTheme.contrast(context) : MainTheme.background(context),
                                     )
                                   ),
                                   Text(
-                                    spaceProvider.currentSpaces[index].cityPlace,
+                                    spaceProvider.currentSpaces[index].address,
                                     textAlign: TextAlign.end,
                                       style: TextStyle(
                                         color: index % 2 == 0 ? MainTheme.contrast(context) : MainTheme.background(context),

@@ -18,8 +18,7 @@ class _EditSpaceInfoState extends State<EditSpaceInfo> {
   late TextEditingController localNameController;
   late TextEditingController capacityController;
   late TextEditingController descriptionController;
-  late TextEditingController streetAddressController;
-  late TextEditingController cityPlaceController;
+  late TextEditingController addressController;
 
   @override
   void initState() {
@@ -31,10 +30,9 @@ class _EditSpaceInfoState extends State<EditSpaceInfo> {
         text: spaceProvider.spaceSelected!.capacity.toString());
     descriptionController = TextEditingController(
         text: spaceProvider.spaceSelected!.descriptionMessage);
-    streetAddressController =
-        TextEditingController(text: spaceProvider.spaceSelected!.streetAddress);
-    cityPlaceController =
-        TextEditingController(text: spaceProvider.spaceSelected!.cityPlace);
+    addressController =
+        TextEditingController(text: spaceProvider.spaceSelected!.address);
+
   }
 
   @override
@@ -42,8 +40,7 @@ class _EditSpaceInfoState extends State<EditSpaceInfo> {
     localNameController.dispose();
     capacityController.dispose();
     descriptionController.dispose();
-    streetAddressController.dispose();
-    cityPlaceController.dispose();
+    addressController.dispose();
     super.dispose();
   }
 
@@ -62,16 +59,10 @@ class _EditSpaceInfoState extends State<EditSpaceInfo> {
           hintText: 'Nombre del local',
         ),
         EditSpaceField(
-          controller: streetAddressController,
+          controller: addressController,
           onValueChanged: (value) =>
-              spaceProvider.setStreetAddress(value),
-          hintText: 'Dirección del local',
-        ),
-        EditSpaceField(
-          controller: cityPlaceController,
-          onValueChanged: (value) =>
-              spaceProvider.setCurrentCityPlace(value),
-          hintText: 'País y Ciudad',
+              spaceProvider.setAddress(value),
+          hintText: 'Dirección (Calle, Distrito, Ciudad, País)',
         ),
         EditSpaceField(
           controller: capacityController,
@@ -120,7 +111,7 @@ class _EditSpaceInfoState extends State<EditSpaceInfo> {
         EditSpaceField(
           controller: descriptionController,
           onValueChanged: (value) =>
-              spaceProvider.setDescription(value),
+              spaceProvider.setDescriptionMessage(value),
           hintText: 'Descripción del local',
         ),
       ],

@@ -29,7 +29,7 @@ class _CapacityFiltersState extends State<CapacityFilters> {
             onChanged: (bool? newValue) {
               setState(() {
                 isChecked = newValue ?? false;
-                spaceProvider.ranges.add(widget.range);
+                spaceProvider.capacityRangesSelected.add(widget.range);
               });
             },
           ),

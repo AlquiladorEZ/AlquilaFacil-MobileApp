@@ -32,6 +32,7 @@ class _SpaceInfoState extends State<SpaceInfo> {
   DateTime? _endDateTime;
   String? _voucherImage; // Para almacenar la imagen del voucher
   double _totalPrice = 0.0; // Para almacenar el precio total
+  int _mainPhotoIndex = 0;
 
   final double pricePerHour = 20.0; // Supongamos que el precio por hora es 20.0
 
@@ -126,14 +127,61 @@ class _SpaceInfoState extends State<SpaceInfo> {
         bottomNavigationBar: const ScreenBottomAppBar(),
         body: SingleChildScrollView(
           child: spaceProvider.spaceSelected != null
-              ? Column(
+            ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                spaceProvider.spaceSelected!.photoUrl,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                repeat: ImageRepeat.noRepeat,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Imagen principal (dinámica)
+                  Image.network(
+                    spaceProvider.spaceSelected!.photoUrls[_mainPhotoIndex],
+                    width: double.infinity,
+                    height: 250,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(height: 10),
+
+                  // Mini galería (solo si hay más de 1 imagen)
+                  if (spaceProvider.spaceSelected!.photoUrls.length > 1)
+                    SizedBox(
+                      height: 80,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: spaceProvider.spaceSelected!.photoUrls.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _mainPhotoIndex = index;
+                              });
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: _mainPhotoIndex == index
+                                      ? Colors.orangeAccent
+                                      : Colors.transparent,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  spaceProvider.spaceSelected!.photoUrls[index],
+                                  width: 100,
+                                  height: 70,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                ],
               ),
               const SizedBox(height: 15),
               Container(
@@ -148,8 +196,7 @@ class _SpaceInfoState extends State<SpaceInfo> {
                       username: profileProvider.usernameExpect,
                       description: spaceProvider.spaceSelected!
                           .descriptionMessage,
-                      streetAddress: spaceProvider.spaceSelected!.streetAddress,
-                      cityPlace: spaceProvider.spaceSelected!.cityPlace,
+                      address: spaceProvider.spaceSelected!.address,
                       isEditMode: false,
                       features: spaceProvider.spaceSelected!.features,
                     ),

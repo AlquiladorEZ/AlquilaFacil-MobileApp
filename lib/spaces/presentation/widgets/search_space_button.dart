@@ -22,8 +22,8 @@ class _SearchSpaceButton extends State<SearchSpaceButton> {
         decoration: BoxDecoration(
             color: Colors.black12, borderRadius: BorderRadius.circular(10.0)),
           child: TextFormField(
-            initialValue: spaceProvider.cityPlace,
-            onChanged: (newCityPlace) => spaceProvider.setCityPlace(newCityPlace),
+            initialValue: spaceProvider.address,
+            onChanged: (newAddress) => spaceProvider.setAddress(newAddress),
             textAlign: TextAlign.start,
             cursorColor: Colors.black,
             style: const TextStyle(color: Colors.black, fontSize: 15.0),

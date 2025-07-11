@@ -8,14 +8,14 @@ import 'package:alquilafacil/spaces/presentation/widgets/navigation_buttons.dart
 
 class RegisterSpaceStep6 extends StatefulWidget {
   final PageController pageController;
-  final String photoUrl;
-  final Function(String) onPhotoChanged;
+  final List<String> photoUrls;
+  final Function(List<String>) onPhotosChanged;
 
   const RegisterSpaceStep6({
     super.key,
     required this.pageController,
-    required this.photoUrl,
-    required this.onPhotoChanged,
+    required this.photoUrls,
+    required this.onPhotosChanged,
   });
 
   @override
@@ -23,29 +23,25 @@ class RegisterSpaceStep6 extends StatefulWidget {
 }
 
 class _RegisterSpaceStep6State extends State<RegisterSpaceStep6> {
-  File? _imageFile; // Almacena la imagen seleccionada
-  bool _canProceed = false; // Controla si se puede avanzar a la siguiente página
+  List<File> _imageFiles = [];
+  bool _canProceed = false;
 
-  // Método para seleccionar imagen desde la galería
-  Future<void> _pickImage() async {
+  Future<void> _pickImages() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
+    final List<XFile> pickedFiles = await picker.pickMultiImage();
+    if (pickedFiles.isNotEmpty) {
       setState(() {
-        _imageFile = File(pickedFile.path);
-        _canProceed = true; // Habilitar el botón para avanzar
+        _imageFiles = pickedFiles.map((xFile) => File(xFile.path)).toList();
+        _canProceed = true;
       });
     }
   }
 
   // Método para subir la imagen a Cloudinary
-  Future<void> _uploadImageToCloudinary() async {
-    if (_imageFile != null) {
-      final spaceProvider = context.read<SpaceProvider>();
-      await spaceProvider.uploadImage(_imageFile!);
-
-      widget.onPhotoChanged(spaceProvider.spacePhotoUrl);
-    }
+  Future<void> _uploadImagesToCloudinary() async {
+    final spaceProvider = context.read<SpaceProvider>();
+    await spaceProvider.uploadImages(_imageFiles);
+    widget.onPhotosChanged(spaceProvider.spacePhotoUrls);
   }
 
   @override
@@ -72,12 +68,11 @@ class _RegisterSpaceStep6State extends State<RegisterSpaceStep6> {
                   color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const SizedBox(height: 32),
-
-            // Botón para añadir imagen
             Center(
               child: GestureDetector(
-                onTap: _pickImage, // Seleccionar imagen
-                child: Container(
+                onTap: _pickImages,
+                child: _imageFiles.isEmpty && widget.photoUrls.isEmpty
+                    ? Container(
                   width: 250,
                   height: 150,
                   decoration: BoxDecoration(
@@ -93,37 +88,36 @@ class _RegisterSpaceStep6State extends State<RegisterSpaceStep6> {
                       ),
                     ],
                   ),
-                  child: _imageFile == null && widget.photoUrl.isEmpty
-                      ? Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.add_a_photo_outlined,
                           color: MainTheme.primary(context), size: 40),
                       const SizedBox(height: 8),
                       const Text(
-                        'Añadir una imagen',
+                        'Añadir imágenes',
                         style: TextStyle(color: Colors.grey, fontSize: 16),
                       ),
                     ],
-                  )
-                      : _imageFile != null
-                      ? ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.file(
-                      _imageFile!,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                  )
-                      : ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      widget.photoUrl,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
+                  ),
+                )
+                    : ClipRRect(
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _imageFiles.isNotEmpty
+                        ? _imageFiles.length
+                        : widget.photoUrls.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 4,
+                        crossAxisSpacing: 4),
+                    itemBuilder: (context, index) {
+                      final isLocal = _imageFiles.isNotEmpty;
+                      return isLocal
+                          ? Image.file(_imageFiles[index], fit: BoxFit.cover)
+                          : Image.network(widget.photoUrls[index], fit: BoxFit.cover);
+                    },
                   ),
                 ),
               ),
@@ -132,7 +126,7 @@ class _RegisterSpaceStep6State extends State<RegisterSpaceStep6> {
             NavigationButtons(
               pageController: widget.pageController,
               canProceed: _canProceed,
-              onNext: _uploadImageToCloudinary, // Subir imagen al proceder
+              onNext: _uploadImagesToCloudinary,
             ),
           ],
         ),

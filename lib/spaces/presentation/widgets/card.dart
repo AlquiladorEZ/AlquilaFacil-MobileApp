@@ -9,7 +9,7 @@ import '../../../public/ui/providers/theme_provider.dart';
 import '../../../public/ui/theme/main_theme.dart';
 
 class SpaceCard extends StatefulWidget {
-  final String location;
+  final String address;
   final String price;
   final String imageUrl;
   final int id;
@@ -17,7 +17,7 @@ class SpaceCard extends StatefulWidget {
 
   const SpaceCard({
     super.key,
-    required this.location,
+    required this.address,
     required this.price,
     required this.imageUrl,
     required this.id,
@@ -92,9 +92,9 @@ class _SpaceCardState extends State<SpaceCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        constraints: const BoxConstraints(maxWidth: 150),
+                        constraints: const BoxConstraints(maxWidth: 240),
                         child: Text(
-                          widget.location,
+                          widget.address,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(

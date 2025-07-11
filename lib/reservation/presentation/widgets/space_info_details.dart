@@ -8,8 +8,7 @@ class SpaceInfoDetails extends StatelessWidget {
   final int capacity;
   final String username;
   final String description;
-  final String streetAddress;
-  final String cityPlace;
+  final String address;
   final String features;
   final bool isEditMode;
 
@@ -19,8 +18,7 @@ class SpaceInfoDetails extends StatelessWidget {
     required this.capacity,
     required this.username,
     required this.description,
-    required this.streetAddress,
-    required this.cityPlace,
+    required this.address,
     required this.isEditMode,
     required this.features,
   });
@@ -40,7 +38,7 @@ class SpaceInfoDetails extends StatelessWidget {
               fontSize: 25.0),
         ),
         Text(
-          "$streetAddress,  $cityPlace",
+          address,
           textAlign: TextAlign.start,
           style: TextStyle(color: MainTheme.contrast(context), fontSize: 18.0),
         ),

@@ -22,7 +22,7 @@ class SpaceTextFormField extends StatelessWidget {
       child: TextFormField(
         controller: controller, // Asignar el controlador al TextFormField
         cursorColor: MainTheme.primary(context),
-        style: const TextStyle(color: Colors.black),
+        style: TextStyle(color: MainTheme.contrast(context)),
         decoration: InputDecoration(
           labelText: label,
           labelStyle:  TextStyle(
@@ -43,13 +43,13 @@ class SpaceTextFormField extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
-            borderSide: const BorderSide(
-              color: Colors.black,
+            borderSide: BorderSide(
+              color: MainTheme.contrast(context),
               width: 1.0,
             ),
           ),
         ),
-        onChanged: onChanged, // Llamar al callback cuando cambie el texto
+        onChanged: onChanged,
       ),
     );
   }

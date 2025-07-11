@@ -7,8 +7,6 @@ import 'package:alquilafacil/spaces/presentation/providers/local_categories_prov
 import 'package:alquilafacil/spaces/presentation/providers/space_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../screens/search_spaces.dart';
 import '../widgets/register_space_steps/register_space_step_1.dart';
 import '../widgets/register_space_steps/register_space_step_2.dart';
 import '../widgets/register_space_steps/register_space_step_3.dart';
@@ -29,17 +27,17 @@ class RegisterSpaceStepsScreen extends StatefulWidget {
 class _RegisterSpaceStepsState extends State<RegisterSpaceStepsScreen> {
   final PageController _pageController = PageController();
   int currentPage = 0;
-  int localCategoryId = 0;
+  String localName = '';
+  String descriptionMessage = '';
   String country = '';
   String city = '';
   String district = '';
   String street = '';
-  String photoUrl = '';
-  String localName = '';
-  String descriptionMessage = '';
+  int price = 0;
   String capacity = '';
   String features = '';
-  int price = 0;
+  List<String> photoUrls = [];
+  int localCategoryId = 0;
 
   @override
   void initState() {
@@ -104,10 +102,10 @@ class _RegisterSpaceStepsState extends State<RegisterSpaceStepsScreen> {
           RegisterSpaceStep5(pageController: _pageController),
           RegisterSpaceStep6(
             pageController: _pageController,
-            photoUrl: photoUrl,
-            onPhotoChanged: (String newPhotoUrl) {
+            photoUrls: photoUrls,
+            onPhotosChanged: (List<String> newPhotoUrls) {
               setState(() {
-                photoUrl = newPhotoUrl;
+                photoUrls = newPhotoUrls;
               });
             },
           ),
@@ -137,33 +135,33 @@ class _RegisterSpaceStepsState extends State<RegisterSpaceStepsScreen> {
           ),
           RegisterSpaceStep9(
             pageController: _pageController,
-            localCategoryId: localCategoryId,
+            localName: localName,
+            descriptionMessage: descriptionMessage,
             country: country,
             city: city,
             district: district,
             street: street,
-            photoUrl: photoUrl,
-            localName: localName,
-            descriptionMessage: descriptionMessage,
-            capacity: capacity,
-            features: features,
             price: price,
+            capacity: capacity,
+            photoUrl: photoUrls.isNotEmpty ? photoUrls[0] : '',
+            features: features,
+            localCategoryId: localCategoryId,
             onFinish: () async  {
               final provider = context.read<SpaceProvider>();
               Space space = Space(
                 id: 0,
-                userId: 0,
-                localCategoryId: localCategoryId,
-                country: country,
-                cityPlace: city,
-                district: district,
-                streetAddress: street,
-                photoUrl: photoUrl,
                 localName: localName,
                 descriptionMessage: descriptionMessage,
+                country: country,
+                city: city,
+                district: district,
+                street: street,
+                price: price * 1.0,
                 capacity: int.parse(capacity),
+                photoUrls: photoUrls,
                 features: features,
-                nightPrice: price * 1.0,
+                localCategoryId: localCategoryId,
+                userId: 0
               );
               try{
                 await provider.createSpace(space);

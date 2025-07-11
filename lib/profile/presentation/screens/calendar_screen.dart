@@ -62,130 +62,146 @@ class _CalendarScreenState extends State<CalendarScreen> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text(
-            "Toca en una fecha para ver más detalles sobre la programación",
-            style: TextStyle(color: MainTheme.contrast(context), fontWeight: FontWeight.bold),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "Toca en una fecha para ver más detalles sobre la programación",
+              style: TextStyle(color: MainTheme.contrast(context), fontWeight: FontWeight.bold),
+            ),
           ),
-          const SizedBox(height: 16.0),
-          TableCalendar(
-            locale: "es_ES",
-            rowHeight: 40.0,
-            calendarStyle: const CalendarStyle(
-              isTodayHighlighted: false,
-              defaultTextStyle: TextStyle(color: Colors.grey),
-              tableBorder: TableBorder(
-                top: BorderSide(color: Colors.grey),
-                bottom: BorderSide(color: Colors.grey),
-                left: BorderSide(color: Colors.grey),
-                right: BorderSide(color: Colors.grey),
-              ),
-            ),
-            headerStyle: HeaderStyle(
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(color: Colors.grey),
-                  left: BorderSide(color: Colors.grey),
-                  right: BorderSide(color: Colors.grey),
-                ),
-              ),
-              titleTextStyle: TextStyle(color: MainTheme.contrast(context)),
-              formatButtonVisible: false,
-              titleCentered: true,
-            ),
-            daysOfWeekHeight: 40.0,
-            focusedDay: _focusedDay,
-            firstDay: DateTime.utc(2024, 09, 01),
-            lastDay: DateTime.utc(2025, 09, 30),
-            calendarBuilders: CalendarBuilders(
-              defaultBuilder: (context, day, focusedDay) {
-                return DefaultCalendarDay(day: day);
-              },
-              outsideBuilder: (context, day, focusedDay) {
-                return DefaultCalendarDay(day: day, isOutside: true);
-              },
-              dowBuilder: (context, day) {
-                final text = DateFormat.E("es_ES").format(day);
-                final capitalizedText = text.replaceFirst(text[0], text[0].toUpperCase());
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Center(
-                    child:  Text(
-                      capitalizedText,
-                      style: TextStyle(
-                          color: MainTheme.contrast(context),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+                child: Column(
+                  children: [
+                    TableCalendar(
+                      locale: "es_ES",
+                      rowHeight: 40.0,
+                      calendarStyle: const CalendarStyle(
+                        isTodayHighlighted: false,
+                        defaultTextStyle: TextStyle(color: Colors.grey),
+                        tableBorder: TableBorder(
+                          top: BorderSide(color: Colors.grey),
+                          bottom: BorderSide(color: Colors.grey),
+                          left: BorderSide(color: Colors.grey),
+                          right: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                      headerStyle: HeaderStyle(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(color: Colors.grey),
+                            left: BorderSide(color: Colors.grey),
+                            right: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                        titleTextStyle: TextStyle(color: MainTheme.contrast(context)),
+                        formatButtonVisible: false,
+                        titleCentered: true,
+                      ),
+                      daysOfWeekHeight: 40.0,
+                      focusedDay: _focusedDay,
+                      firstDay: DateTime.utc(2024, 09, 01),
+                      lastDay: DateTime.utc(2025, 09, 30),
+                      calendarBuilders: CalendarBuilders(
+                        defaultBuilder: (context, day, focusedDay) {
+                          return DefaultCalendarDay(day: day);
+                        },
+                        outsideBuilder: (context, day, focusedDay) {
+                          return DefaultCalendarDay(day: day, isOutside: true);
+                        },
+                        dowBuilder: (context, day) {
+                          final text = DateFormat.E("es_ES").format(day);
+                          final capitalizedText = text.replaceFirst(text[0], text[0].toUpperCase());
+                          return Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                              shape: BoxShape.rectangle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                capitalizedText,
+                                style: TextStyle(
+                                  color: MainTheme.contrast(context),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        markerBuilder: (context, day, events) {
+                          final List<Reservation> matchingReservations = reservationProvider.reservations.where(
+                                (reservation) => reservation.startDate.year == day.year &&
+                                reservation.startDate.month == day.month &&
+                                reservation.startDate.day == day.day,
+                          ).toList();
+
+                          final List<Reservation> matchingOtherUsersReservations = reservationProvider.reservationsFromOtherUsers.where(
+                                (reservation) => reservation.startDate.year == day.year &&
+                                reservation.startDate.month == day.month &&
+                                reservation.startDate.day == day.day,
+                          ).toList();
+
+                          if (matchingReservations.isNotEmpty) {
+                            final reservation = matchingReservations.first;
+                            return HighlightedCalendarDay(
+                              day: day,
+                              color: Colors.red,
+                              onTap: () async {
+                                await spaceProvider.fetchSpaceById(reservation.spaceId);
+                                Navigator.pushNamed(
+                                  context,
+                                  '/reservation-details',
+                                  arguments: reservation,
+                                );
+                              },
+                            );
+                          }
+
+                          if (matchingOtherUsersReservations.isNotEmpty) {
+                            final reservation = matchingOtherUsersReservations.first;
+                            return HighlightedCalendarDay(
+                              day: day,
+                              color: reservation.isSubscribed ?? false ? Colors.amberAccent : Colors.blue,
+                              onTap: () async {
+                                await spaceProvider.fetchSpaceById(reservation.spaceId);
+                                Navigator.pushNamed(
+                                  context,
+                                  '/modify-reservation',
+                                  arguments: reservation,
+                                );
+                              },
+                            );
+                          }
+
+                          return null;
+                        },
                       ),
                     ),
-                  ),
-                );
-              },
-              markerBuilder: (context, day, events) {
-                final List<Reservation> matchingReservations = reservationProvider.reservations.where(
-                      (reservation) => reservation.startDate.year == day.year &&
-                      reservation.startDate.month == day.month &&
-                      reservation.startDate.day == day.day,
-                ).toList();
-                final List<Reservation> matchingOtherUsersReservations = reservationProvider.reservationsFromOtherUsers.where(
-                      (reservation) => reservation.startDate.year == day.year &&
-                      reservation.startDate.month == day.month &&
-                      reservation.startDate.day == day.day,
-                ).toList();
-                if (matchingReservations.isNotEmpty) {
-                  final reservation = matchingReservations.first;
-                  return HighlightedCalendarDay(
-                    day: day,
-                    color: Colors.red,
-                    onTap: () async {
-                      await spaceProvider.fetchSpaceById(reservation.spaceId);
-                      Navigator.pushNamed(
-                        context,
-                        '/reservation-details',
-                        arguments: reservation,
-                      );
-                    },
-                  );
-                }
-                if (matchingOtherUsersReservations.isNotEmpty) {
-                  final reservation = matchingOtherUsersReservations.first;
-                  return HighlightedCalendarDay(
-                    day: day,
-                    color: reservation.isSubscribed ?? false ? Colors.amberAccent : Colors.blue,
-                    onTap: () async {
-                      await spaceProvider.fetchSpaceById(reservation.spaceId);
-                      Navigator.pushNamed(
-                        context,
-                        '/modify-reservation',
-                        arguments: reservation,
-                      );
-                    },
-                  );
-                }
-                return null;
-              },
+                    const SizedBox(height: 16.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          EventTypeIndicator(color: Colors.red, text: "Reserva"),
+                          SizedBox(height: 16.0),
+                          EventTypeIndicator(color: Colors.blue, text: "Reserva de tu espacio"),
+                          SizedBox(height: 16.0),
+                          EventTypeIndicator(color: Colors.amberAccent, text: "Reserva de tu espacio por usuario premium"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-          const SizedBox(height: 16.0),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                EventTypeIndicator(color: Colors.red, text: "Reserva"),
-                SizedBox(height: 16.0),
-                EventTypeIndicator(color: Colors.blue, text: "Reserva de tu espacio"),
-                SizedBox(height: 16.0),
-                EventTypeIndicator(color: Colors.amberAccent, text: "Reserva de tu espacio por usuario premium"),
-              ],
-            ),
-          ),
-        ]),
+        ],
       ),
       bottomNavigationBar: const ScreenBottomAppBar(),
     );

@@ -64,13 +64,11 @@ class _SpaceDetailsState extends State<SpacesDetails> {
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         return SpaceCard(
-                          location:
-                              spaceProvider.currentSpaces[index].cityPlace,
-                          price: spaceProvider.currentSpaces[index].nightPrice
-                              .toString(),
-                          imageUrl: spaceProvider.currentSpaces[index].photoUrl,
                           id: spaceProvider.currentSpaces[index].id,
                           userId: spaceProvider.currentSpaces[index].userId!,
+                          address: spaceProvider.currentSpaces[index].address,
+                          price: spaceProvider.currentSpaces[index].price.toString(),
+                          imageUrl: spaceProvider.currentSpaces[index].photoUrls[0]
                         );
                       },
                       itemCount: spaceProvider.currentSpaces.length,

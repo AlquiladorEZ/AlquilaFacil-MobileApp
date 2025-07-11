@@ -89,9 +89,9 @@ class _SearchSpaces extends State<SearchSpaces> {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               itemBuilder: (BuildContext context, int index) {
                 return SpaceCard(
-                  location: spaceProvider.spaces[index].cityPlace,
-                  price: spaceProvider.spaces[index].nightPrice.toString(),
-                  imageUrl: spaceProvider.spaces[index].photoUrl,
+                  address: spaceProvider.spaces[index].address,
+                  price: spaceProvider.spaces[index].price.toString(),
+                  imageUrl: spaceProvider.spaces[index].photoUrls[0],
                   id: spaceProvider.spaces[index].id,
                   userId: spaceProvider.spaces[index].userId!,
                 );

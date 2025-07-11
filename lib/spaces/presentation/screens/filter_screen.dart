@@ -122,7 +122,7 @@ class _FilterScreenState extends State<FilterScreen>{
                          isSelected: selectedIndex == category.id,
                          onSelect: () => {setState(() {
                            selectedIndex = category.id;
-                           spaceProvider.categorySelected = localCategoriesProvider.localCategories[index].id;
+                           spaceProvider.localCategoryIdSelected = localCategoriesProvider.localCategories[index].id;
                          })},
                      );
                    },
@@ -156,7 +156,7 @@ class _FilterScreenState extends State<FilterScreen>{
                      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                      child:
                      TextButton(onPressed: () async {
-                         if(spaceProvider.maxRange != 0 || spaceProvider.minRange != 0 || spaceProvider.categorySelected != 0){
+                         if(spaceProvider.minCapacityRangeSelected != 0 || spaceProvider.maxCapacityRangeSelected != 0 || spaceProvider.localCategoryIdSelected != 0){
                             spaceProvider.getFilterRanges();
                             spaceProvider.searchDistrictsByCategoryIdAndRange();
                             Navigator.pushNamed(

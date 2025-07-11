@@ -62,7 +62,7 @@ class _ReservationDetailsScreen extends State<ReservationDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network(
-                spaceProvider.spaceSelected!.photoUrl,
+                spaceProvider.spaceSelected!.photoUrls[0],
                 width: double.infinity,
                 fit: BoxFit.cover,
                 repeat: ImageRepeat.noRepeat,
@@ -80,8 +80,7 @@ class _ReservationDetailsScreen extends State<ReservationDetailsScreen> {
                       capacity: spaceProvider.spaceSelected!.capacity,
                       username: profileProvider.usernameExpect,
                       description: spaceProvider.spaceSelected!.descriptionMessage,
-                      streetAddress: spaceProvider.spaceSelected!.streetAddress,
-                      cityPlace: spaceProvider.spaceSelected!.cityPlace,
+                      address: spaceProvider.spaceSelected!.address,
                       isEditMode: false,
                       features: spaceProvider.spaceSelected!.features
                     ),

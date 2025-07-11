@@ -50,7 +50,7 @@ class _ModifyReservationScreen extends State<ModifyReservationScreen> {
         backgroundColor: MainTheme.background(context),
         appBar: AppBar(
           backgroundColor: MainTheme.primary(context),
-          title: Text("Información de la reserva", style: TextStyle(color: Colors.white, fontSize: 18)),
+          title: const Text("Información de la reserva", style: TextStyle(color: Colors.white, fontSize: 18)),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
@@ -65,7 +65,7 @@ class _ModifyReservationScreen extends State<ModifyReservationScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network(
-                spaceProvider.spaceSelected!.photoUrl,
+                spaceProvider.spaceSelected!.photoUrls[0],
                 width: double.infinity,
                 fit: BoxFit.cover,
                 repeat: ImageRepeat.noRepeat,
@@ -91,7 +91,7 @@ class _ModifyReservationScreen extends State<ModifyReservationScreen> {
                           fontSize: 25.0),
                     ),
                     Text(
-                      "${spaceProvider.spaceSelected!.streetAddress},  ${spaceProvider.spaceSelected!.cityPlace}",
+                      spaceProvider.spaceSelected!.address,
                       textAlign: TextAlign.start,
                       style: TextStyle(color: MainTheme.contrast(context), fontSize: 18.0),
                     ),
@@ -247,7 +247,7 @@ class _ModifyReservationScreen extends State<ModifyReservationScreen> {
                     const SizedBox(height: 20),
                     reservation.endDate.isAfter(DateTime.now()) ?
                     Image.network(
-                      spaceProvider.spaceSelected!.photoUrl,
+                      spaceProvider.spaceSelected!.photoUrls[0],
                       width: double.infinity,
                       fit: BoxFit.cover,
                       repeat: ImageRepeat.noRepeat,

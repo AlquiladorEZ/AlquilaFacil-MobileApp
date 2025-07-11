@@ -211,9 +211,9 @@ class FavoritesScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final space = favoriteSpaces[index];
                 return SpaceCard(
-                  location: space.cityPlace,
-                  price: space.nightPrice.toString(),
-                  imageUrl: space.photoUrl,
+                  address: space.address,
+                  price: space.price.toString(),
+                  imageUrl: space.photoUrls[0],
                   id: space.id,
                   userId: space.userId!,
                 );

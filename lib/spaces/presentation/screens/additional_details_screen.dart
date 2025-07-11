@@ -35,10 +35,9 @@ class AdditionalDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
-              spaceProvider.spaceSelected!.photoUrl,
+              spaceProvider.spaceSelected!.photoUrls[0],
               width: double.infinity,
               fit: BoxFit.cover,
-
             ),
             const SizedBox(height: 20),
             Container(
